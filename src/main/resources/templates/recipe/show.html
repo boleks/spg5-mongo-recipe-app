@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${recipe.description}">Description</title>
+
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<!--/*@thymesVar id="recipe" type="com.boleks.spg5MongoRecipeApp.domain.Recipe"*/-->
+<div class="container-fluid">
+
+    <div class="row pt-3">
+
+        <div class="col-8 offset-2">
+
+            <div class="card">
+                <div class="card-header bg-primary text-center text-white">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                        </div>
+                        <div class="col-2">
+                            <a class="float-right btn btn-warning mt-2" href="#"
+                               th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Izmeni sliku</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-3">
+                            <h6>Categories:</h6>
+                        </div>
+                        <div class="col-3">
+                            <ul>
+                                <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">cat
+                                    three
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <img src="../../static/images/guacamole400x400WithX.jpg"
+                                 th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
+                                 width="200" height="200">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h6>Prep Time:</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <p th:text="${(recipe.prepTime + ' min')}">30 min</p>
+                        </div>
+                        <div class="col-md-2">
+                            <h6>Difficulty:</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <p th:text="${recipe.difficulty}">Easy</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h6>Cooktime:</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <p th:text="${(recipe.cookTime + ' min')}">30 min</p>
+                        </div>
+                        <div class="col-md-2">
+                            <h6>Servings:</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <p th:text="${recipe.servings}">4</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h6>Source:</h6>
+                        </div>
+                        <div class="col-md-4">
+                            <p><a href="#" th:href="@{recipe.url}">Original</a></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h6>URL:</h6>
+                        </div>
+                        <div class="col-md-10">
+                            <p th:text="${recipe.url}">http://www.example.com</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="row">
+                        <div class="col-11">
+                            <h3 class="card-title">Ingredients</h3>
+                        </div>
+
+                        <div class="col-1">
+                            <a class="btn btn-warning" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}"
+                               role="button">Pregled</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <ul>
+                                <li th:each="ingredient : ${recipe.ingredients}" th:text="${
+                                (ingredient.getAmount() + ' ' + ingredient.uom.getDescription() + ' - ' + ingredient.getDescription())}">
+                                    1 Cup of milk
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title">Directions</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p th:text="${recipe.directions}">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
+                                dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
+                                pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+                                fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet
+                                a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer
+                                tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
+                                tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam
+                                lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.
+                                Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus,
+                                tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
+                                sed ipsum.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title">Notes</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <p th:text="${recipe.notes.recipeNotes}">Lorem ipsum dolor sit amet, consectetuer adipiscing
+                                elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et
+                                magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec,
+                                pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo,
+                                fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet
+                                a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer
+                                tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
+                                tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam
+                                lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
+                                metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.
+                                Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus,
+                                tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque
+                                sed ipsum.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>
